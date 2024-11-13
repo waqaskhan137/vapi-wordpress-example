@@ -9,6 +9,19 @@ A simple web application demonstrating voice interaction using Vapi API. The app
 - Error handling for microphone permissions
 - Responsive design
 
+```text
+vapi-wordpress-example/
+├── src/
+│   └── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   ├── bundle.js
+│   └── script.js
+├── README.md
+```
+
+
 ## Setup
 
 1. Clone this repository
@@ -27,6 +40,10 @@ A simple web application demonstrating voice interaction using Vapi API. The app
 - `styles.css` - Button styling and animations
 - `script.js` - Voice recording logic and Vapi integration
 - `bundle.js` - Bundled dependencies
+
+## bundle.js
+
+`bundle.js` is generated using the `vapi-websdk` npm package. It includes all necessary dependencies required for the Vapi API integration.
 
 ## Note
 
