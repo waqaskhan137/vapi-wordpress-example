@@ -1,6 +1,6 @@
 // Public and Assistant keys for Vapi
-const PUBLIC_KEY = "a3886229-55ea-4b2e-9e3e-53d3d00c23fb";
-const ASSISTANT_KEY = "201fbf92-2a8a-44ea-a238-31b3050c4747";
+const PUBLIC_KEY = "b2721269-1f89-4fdf-9796-f3bc590d2d4e";
+const ASSISTANT_KEY = "fa0e897b-1750-4821-9dfc-fd6d0a088698";
 
 // Initialize Vapi with the public key
 const vapi = new Vapi(PUBLIC_KEY);
@@ -8,22 +8,36 @@ const vapi = new Vapi(PUBLIC_KEY);
 // Get the start button element from the DOM
 const startButton = document.getElementById('startButton');
 
-// Function to start the connection
-async function startConnection() {
+// Variable to track the connection state
+let isConnected = false;
+
+// Function to toggle the connection
+async function toggleConnection() {
     try {
-        // Request microphone permission from the user
-        await navigator.mediaDevices.getUserMedia({ audio: true });
+        if (!isConnected) {
+            // Request microphone permission from the user
+            await navigator.mediaDevices.getUserMedia({ audio: true });
+            
+            // Start the Vapi connection with the assistant key
+            await vapi.start(ASSISTANT_KEY);
+            
+            // Add 'active' class to the start button to indicate connection is active
+            startButton.classList.add('active');
+        } else {
+            // Stop the Vapi connection
+            await vapi.stop();
+            
+            // Remove 'active' class from the start button
+            startButton.classList.remove('active');
+        }
         
-        // Start the Vapi connection with the assistant key
-        await vapi.start(ASSISTANT_KEY);
-        
-        // Add 'active' class to the start button to indicate connection is active
-        startButton.classList.add('active');
+        // Toggle the connection state
+        isConnected = !isConnected;
     } catch (error) {
         // Log any errors that occur during the connection process
-        console.error('Error starting call:', error);
+        console.error('Error toggling connection:', error);
     }
 }
 
-// Add a click event listener to the start button to initiate the connection
-startButton.addEventListener('click', startConnection);
+// Add a click event listener to the start button to toggle the connection
+startButton.addEventListener('click', toggleConnection);
